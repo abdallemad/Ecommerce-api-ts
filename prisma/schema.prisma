@@ -17,12 +17,32 @@ enum Role {
   user
   admin
 }
+
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name     String
-  email    String @unique
+  email    String    @unique
   password String
-  role     Role    @default(user) // Set default value to Role.user
+  role     Role      @default(user) // Set default value to Role.user
+  products Product[]
 }
 
-
+model Product {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  price         Float    @default(0)
+  description   String
+  image         String
+  category      String
+  company       String
+  colors        String[]
+  featured      Boolean  @default(false)
+  freeShipping  Boolean  @default(false)
+  inventory     Int      @default(15)
+  averageRating Float    @default(0)
+  image_id      String   
+  userId        String   @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
