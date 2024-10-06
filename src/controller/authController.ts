@@ -38,6 +38,7 @@ export const login = async(req:Request,res:Response)=>{
   const tokenUser = {name:user.name,id:user.id,role:user.role};
   attachCookiesToResponse({res:res,data:tokenUser});
   res.status(StatusCodes.CREATED).json({user:tokenUser})
+  
 }
 
 export const logout = async (req:Request,res:Response)=>{

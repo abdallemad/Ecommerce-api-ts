@@ -4,6 +4,7 @@ import express from 'express';
 import authRouter from './routes/authRoute';
 import userRouter from './routes/userRoute'
 import productRouter from './routes/productRoute'
+import reviewRouter from './routes/reviewRoute'
 //error handler
 import notFound from './middleware/notFound';
 import errorHandler from './middleware/errorHandler';
@@ -31,6 +32,7 @@ app.use(cors());
 app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/users',userRouter);
 app.use('/api/v1/products',productRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 app.get('/api/v1',(req,res)=>{
   console.log(req.signedCookies)

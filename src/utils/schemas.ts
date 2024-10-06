@@ -34,9 +34,17 @@ export const productSchema = z.object({
   colors:z.array(z.string())
     .default(['#fff'])
 })
-
 export type ProductType = z.infer<typeof productSchema>
-
+export const reviewSchema = z.object({
+  title:z.string({message:"please provide title"})
+    .min(2,{message:'title cant less than 2'}),
+  comment:z.string({message:"please provide comment"}),
+  rating:z.number({message:"please provide product rating"})
+    .min(0,{message:"rating cat be less 0"})
+    .max(5,{message:'rating cant be bigger than 5'}),
+  productId:z.string({message:"you must provide productId"}),
+})
+export type ReviewType = z.infer<typeof reviewSchema>
 export function validateZodSchema<T>(data:any,zodSchema:ZodSchema):T{
   const result = zodSchema.safeParse(data)
   if(result.error){

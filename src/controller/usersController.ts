@@ -56,3 +56,21 @@ export const getSingleUser = async(req:Request,res:Response)=>{
   checkPermission({id:req.user.id,role:req.user.role},user.id)
   res.status(StatusCodes.OK).json({user})
 }
+
+export const getAllUserReviews = async(req:Request,res:Response)=>{
+  // @ts-ignore
+  const {id:userId} = req.params
+  const userReviews = await db.user.findFirst({
+    where:{
+      id:userId
+    },
+    select:{
+      reviews:true,
+      id:true
+    }
+  })
+  if(!userReviews) throw new CustomErrors.NotFoundError(`no user match this id: ${userId}`)
+  // @ts-ignore
+  checkPermission(req.user,userReviews?.id)
+  res.status(StatusCodes.OK).json({reviews:userReviews?.reviews})
+}
